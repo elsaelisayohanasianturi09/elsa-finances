@@ -222,7 +222,10 @@ const DashboardContent = () => {
                 <TransactionForm onSubmit={() => {}} />
               </div>
               <div className="lg:col-span-2">
-                <TransactionList transactions={transactions.slice(0, 5)} />
+                <TransactionList 
+                  transactions={transactions.slice(0, 6)} 
+                  showPagination={false}
+                />
               </div>
             </div>
           </TabsContent>
@@ -233,7 +236,7 @@ const DashboardContent = () => {
                 <TransactionForm onSubmit={() => {}} />
               </div>
               <div className="lg:col-span-2">
-                <TransactionList transactions={transactions} />
+                <TransactionList />
               </div>
             </div>
           </TabsContent>
