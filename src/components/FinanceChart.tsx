@@ -18,10 +18,24 @@ const FinanceChart: React.FC<FinanceChartProps> = ({ data, type, title }) => {
     }).format(value);
   };
 
+  const CustomTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="white-card p-3 rounded-lg shadow-lg">
+          <p className="font-semibold text-gray-800">{payload[0].payload.name}</p>
+          <p className="text-purple-600 font-bold">
+            {formatCurrency(payload[0].value)}
+          </p>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
-    <Card className="animate-fade-in">
+    <Card className="interactive-card">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold">{title}</CardTitle>
+        <CardTitle className="text-lg font-semibold text-gray-800">{title}</CardTitle>
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={300}>
@@ -39,14 +53,14 @@ const FinanceChart: React.FC<FinanceChartProps> = ({ data, type, title }) => {
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
-              <Tooltip formatter={(value: number) => formatCurrency(value)} />
+              <Tooltip content={<CustomTooltip />} />
             </PieChart>
           ) : (
             <BarChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis tickFormatter={(value) => `${value / 1000}k`} />
-              <Tooltip formatter={(value: number) => formatCurrency(value)} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+              <XAxis dataKey="name" stroke="#64748b" />
+              <YAxis tickFormatter={(value) => `${value / 1000}k`} stroke="#64748b" />
+              <Tooltip content={<CustomTooltip />} />
               <Bar dataKey="value" radius={[4, 4, 0, 0]}>
                 {data.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.color} />

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from '@/contexts/AuthContext';
 import { ThemeProvider } from '@/contexts/ThemeContext';
@@ -17,6 +16,7 @@ import { useSavingsGoals } from '@/hooks/useSavingsGoals';
 import { FinancialSummary } from '@/types';
 import { DollarSign, TrendingUp, TrendingDown, PiggyBank, HandCoins, Target, Database } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import RealtimePieChart from '@/components/RealtimePieChart';
 
 const DashboardContent = () => {
   const { transactions } = useTransactions();
@@ -109,7 +109,7 @@ const DashboardContent = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background emoji-bg">
       <Header />
       
       <main className="container mx-auto px-4 py-8">
@@ -180,49 +180,41 @@ const DashboardContent = () => {
 
         {/* Enhanced Tabs Navigation */}
         <Tabs defaultValue="dashboard" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 h-auto p-2 bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl">
-            <TabsTrigger value="dashboard" className="flex items-center gap-2 font-bold data-[state=active]:bg-white data-[state=active]:text-purple-600">
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 h-auto p-2 white-card rounded-xl">
+            <TabsTrigger value="dashboard" className="flex items-center gap-2 font-bold data-[state=active]:bg-purple-100 data-[state=active]:text-purple-600">
               <TrendingUp className="h-4 w-4" />
               <span className="hidden sm:inline">Dashboard</span>
             </TabsTrigger>
-            <TabsTrigger value="transactions" className="flex items-center gap-2 font-bold data-[state=active]:bg-white data-[state=active]:text-purple-600">
+            <TabsTrigger value="transactions" className="flex items-center gap-2 font-bold data-[state=active]:bg-purple-100 data-[state=active]:text-purple-600">
               <DollarSign className="h-4 w-4" />
               <span className="hidden sm:inline">Transaksi</span>
             </TabsTrigger>
-            <TabsTrigger value="debts" className="flex items-center gap-2 font-bold data-[state=active]:bg-white data-[state=active]:text-purple-600">
+            <TabsTrigger value="debts" className="flex items-center gap-2 font-bold data-[state=active]:bg-purple-100 data-[state=active]:text-purple-600">
               <HandCoins className="h-4 w-4" />
               <span className="hidden sm:inline">Hutang</span>
             </TabsTrigger>
-            <TabsTrigger value="goals" className="flex items-center gap-2 font-bold data-[state=active]:bg-white data-[state=active]:text-purple-600">
+            <TabsTrigger value="goals" className="flex items-center gap-2 font-bold data-[state=active]:bg-purple-100 data-[state=active]:text-purple-600">
               <Target className="h-4 w-4" />
               <span className="hidden sm:inline">Target</span>
             </TabsTrigger>
-            <TabsTrigger value="export" className="flex items-center gap-2 font-bold data-[state=active]:bg-white data-[state=active]:text-purple-600">
+            <TabsTrigger value="export" className="flex items-center gap-2 font-bold data-[state=active]:bg-purple-100 data-[state=active]:text-purple-600">
               <Database className="h-4 w-4" />
               <span className="hidden sm:inline">Export</span>
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="dashboard" className="space-y-6">
-            {/* Charts */}
-            {transactions.length > 0 && (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                {expenseData.length > 0 && (
-                  <FinanceChart
-                    data={expenseData}
-                    type="pie"
-                    title="Pengeluaran per Kategori 📊"
-                  />
-                )}
-                {monthlyData.length > 0 && (
-                  <FinanceChart
-                    data={monthlyData}
-                    type="bar"
-                    title="Trend Bulanan 📈"
-                  />
-                )}
-              </div>
-            )}
+            {/* Real-time Charts */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+              <RealtimePieChart />
+              {monthlyData.length > 0 && (
+                <FinanceChart
+                  data={monthlyData}
+                  type="bar"
+                  title="Trend Bulanan 📈"
+                />
+              )}
+            </div>
 
             {/* Quick Transaction Form and List */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -261,7 +253,7 @@ const DashboardContent = () => {
 
         {/* Enhanced Footer */}
         <footer className="mt-16 text-center">
-          <div className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl p-8 mb-8">
+          <div className="white-card rounded-2xl p-8 mb-8 emoji-bg">
             <h3 className="text-2xl font-black text-purple-800 mb-2">
               Keep Going, Elsa! 💪
             </h3>
