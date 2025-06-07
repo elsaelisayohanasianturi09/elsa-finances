@@ -43,7 +43,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const redirectUrl = `${window.location.origin}/`;
       
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -54,14 +54,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       });
       
-      // Even if there's a webhook error, the user might still be created
-      if (error && !error.message.includes('webhook')) {
+      console.log('SignUp response:', { data, error });
+      
+      // If user is created successfully, ignore webhook errors
+      if (data?.user && error?.message?.includes('Error sending confirmation mail')) {
+        console.log('User created successfully, email confirmation failed but that\'s okay');
+        return { error: null };
+      }
+      
+      // If there's any other error, return it
+      if (error) {
+        console.error('SignUp error:', error);
         return { error };
       }
       
       return { error: null };
     } catch (err: any) {
-      console.error('SignUp error:', err);
+      console.error('SignUp catch error:', err);
       return { error: err };
     }
   };

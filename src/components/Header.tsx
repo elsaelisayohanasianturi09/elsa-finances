@@ -14,11 +14,11 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b-2 border-white/20 bg-gradient-to-r from-white/95 to-gray-50/95 backdrop-blur-lg emoji-bg">
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-card/95 backdrop-blur-lg emoji-bg soft-shadow">
       <div className="container mx-auto flex h-20 items-center justify-between px-4">
         <div className="flex items-center space-x-4">
           <div className="relative">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 soft-shadow">
               <PiggyBank className="h-7 w-7 text-white" />
             </div>
             <Sparkles className="absolute -top-1 -right-1 h-4 w-4 text-yellow-400 animate-bounce" />
@@ -27,7 +27,7 @@ const Header: React.FC = () => {
             <h1 className="text-2xl font-black bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
               Elsa Finance ✨
             </h1>
-            <p className="text-sm text-gray-600 font-bold">
+            <p className="text-sm text-muted-foreground font-bold">
               Yuk kelola uang dengan bijak! 💰
             </p>
           </div>
@@ -38,7 +38,7 @@ const Header: React.FC = () => {
             variant="ghost"
             size="sm"
             onClick={toggleTheme}
-            className="h-10 w-10 rounded-xl bg-purple-100 hover:bg-purple-200 text-purple-600"
+            className="h-10 w-10 rounded-xl bg-secondary hover:bg-secondary/80 text-foreground"
           >
             {theme === 'light' ? (
               <Moon className="h-5 w-5" />
@@ -51,7 +51,7 @@ const Header: React.FC = () => {
             variant="ghost"
             size="sm"
             onClick={handleSignOut}
-            className="h-10 px-4 rounded-xl bg-red-100 hover:bg-red-200 text-red-600 font-bold"
+            className="h-10 px-4 rounded-xl bg-destructive/10 hover:bg-destructive/20 text-destructive font-bold"
           >
             <LogOut className="h-4 w-4 mr-2" />
             <span className="hidden sm:inline">Logout</span>

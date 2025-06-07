@@ -5,65 +5,65 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 250 250 252;
+    --foreground: 71 85 105;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 255 255 255;
+    --card-foreground: 71 85 105;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 255 255 255;
+    --popover-foreground: 71 85 105;
 
-    --primary: 262.1 83.3% 57.8%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 139 92 246;
+    --primary-foreground: 248 250 252;
 
-    --secondary: 210 40% 98%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 241 245 249;
+    --secondary-foreground: 71 85 105;
 
-    --muted: 210 40% 98%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 248 250 252;
+    --muted-foreground: 100 116 139;
 
-    --accent: 210 40% 98%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 241 245 249;
+    --accent-foreground: 71 85 105;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 239 68 68;
+    --destructive-foreground: 248 250 252;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 262.1 83.3% 57.8%;
+    --border: 226 232 240;
+    --input: 226 232 240;
+    --ring: 139 92 246;
 
     --radius: 0.75rem;
   }
 
   .dark {
-    --background: 224 71.4% 4.1%;
-    --foreground: 210 20% 98%;
+    --background: 15 23 42;
+    --foreground: 226 232 240;
 
-    --card: 224 71.4% 4.1%;
-    --card-foreground: 210 20% 98%;
+    --card: 30 41 59;
+    --card-foreground: 226 232 240;
 
-    --popover: 224 71.4% 4.1%;
-    --popover-foreground: 210 20% 98%;
+    --popover: 30 41 59;
+    --popover-foreground: 226 232 240;
 
-    --primary: 263.4 70% 50.4%;
-    --primary-foreground: 210 20% 98%;
+    --primary: 139 92 246;
+    --primary-foreground: 15 23 42;
 
-    --secondary: 215 27.9% 16.9%;
-    --secondary-foreground: 210 20% 98%;
+    --secondary: 51 65 85;
+    --secondary-foreground: 226 232 240;
 
-    --muted: 215 27.9% 16.9%;
-    --muted-foreground: 217.9 10.6% 64.9%;
+    --muted: 51 65 85;
+    --muted-foreground: 148 163 184;
 
-    --accent: 215 27.9% 16.9%;
-    --accent-foreground: 210 20% 98%;
+    --accent: 51 65 85;
+    --accent-foreground: 226 232 240;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 20% 98%;
+    --destructive: 220 38 38;
+    --destructive-foreground: 226 232 240;
 
-    --border: 215 27.9% 16.9%;
-    --input: 215 27.9% 16.9%;
-    --ring: 263.4 70% 50.4%;
+    --border: 51 65 85;
+    --input: 51 65 85;
+    --ring: 139 92 246;
   }
 }
 
@@ -75,20 +75,20 @@
   body {
     @apply bg-background text-foreground;
     background-image: 
-      radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 20%),
-      radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 20%),
-      radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.1) 0%, transparent 20%);
+      radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(59, 130, 246, 0.03) 0%, transparent 50%);
     position: relative;
   }
 
   body::before {
-    content: '💰 🎯 📊 💸 🐷 💳 ✨ 🌟 💫 🎉 🔥 ⭐ 🎨 🌈 🦄 💎 🎪 🎭 🎸 🎵';
+    content: '💰 💸 📊 🎯 💳 ✨ 🌟 💫 🎉 🔥 ⭐ 🎨 🌈 🦄 💎 🎪 🎭 🎸 🎵 🚀 💝 🎁 🌸 🌺 🌻 🌼 🌷 🌹 🌴 🌲 🌱';
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    font-size: 2rem;
+    font-size: 1.8rem;
     opacity: 0.03;
     pointer-events: none;
     z-index: -1;
@@ -96,11 +96,12 @@
     letter-spacing: 3rem;
     word-spacing: 2rem;
     overflow: hidden;
-    animation: float 20s ease-in-out infinite;
+    animation: float 25s ease-in-out infinite;
   }
 
   .dark body::before {
-    opacity: 0.05;
+    opacity: 0.04;
+    color: #a855f7;
   }
 
   .emoji-bg {
@@ -109,34 +110,35 @@
   }
 
   .emoji-bg::before {
-    content: '💰 🎯 📊 💸 🐷 💳 ✨ 🌟 💫 🎉';
+    content: '💰 💸 📊 🎯 💳 ✨ 🌟 💫 🎉 🔥 ⭐ 🎨 🌈 🦄 💎';
     position: absolute;
     top: -20px;
     left: -20px;
     right: -20px;
     bottom: -20px;
-    font-size: 1.5rem;
-    opacity: 0.04;
+    font-size: 1.2rem;
+    opacity: 0.02;
     pointer-events: none;
     z-index: 0;
     line-height: 3rem;
     letter-spacing: 2rem;
     word-spacing: 1.5rem;
-    animation: float 15s ease-in-out infinite;
+    animation: float 20s ease-in-out infinite;
   }
 
   .dark .emoji-bg::before {
-    opacity: 0.06;
+    opacity: 0.03;
+    color: #8b5cf6;
   }
 }
 
 @layer utilities {
   .gradient-bg {
-    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #ffffff 100%);
+    background: linear-gradient(135deg, #fafafa 0%, #f1f5f9 50%, #fafafa 100%);
   }
   
   .gradient-bg-light {
-    background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 50%, #ffffff 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #ffffff 100%);
   }
 
   .dark .gradient-bg {
@@ -152,7 +154,7 @@
   }
 
   .animate-fade-in {
-    animation: fadeIn 0.5s ease-in-out;
+    animation: fadeIn 0.6s ease-in-out;
   }
 
   @keyframes fadeIn {
@@ -162,20 +164,24 @@
 
   @keyframes float {
     0%, 100% { transform: translateY(0px) rotate(0deg); }
-    25% { transform: translateY(-10px) rotate(2deg); }
-    50% { transform: translateY(-5px) rotate(0deg); }
-    75% { transform: translateY(-15px) rotate(-2deg); }
+    25% { transform: translateY(-12px) rotate(1deg); }
+    50% { transform: translateY(-6px) rotate(0deg); }
+    75% { transform: translateY(-18px) rotate(-1deg); }
   }
 
   .white-card {
-    @apply bg-white/95 backdrop-blur-sm border border-gray-100 shadow-lg;
-  }
-
-  .dark .white-card {
-    @apply bg-gray-800/95 backdrop-blur-sm border border-gray-700 shadow-lg;
+    @apply bg-card/90 backdrop-blur-sm border border-border shadow-lg;
   }
 
   .interactive-card {
-    @apply white-card hover:shadow-xl hover:scale-105 transform transition-all duration-300 emoji-bg;
+    @apply white-card hover:shadow-xl hover:scale-[1.02] transform transition-all duration-300 emoji-bg;
+  }
+
+  .soft-shadow {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  }
+
+  .dark .soft-shadow {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
   }
 }

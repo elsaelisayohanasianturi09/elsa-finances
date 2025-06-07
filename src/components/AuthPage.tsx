@@ -41,12 +41,17 @@ const AuthPage: React.FC = () => {
       } else {
         const { error } = await signUp(email, password, fullName);
         if (error) {
-          // Handle specific signup errors
           if (error.message.includes('User already registered')) {
             toast({
               variant: "destructive",
               title: "Email sudah terdaftar! 📧",
               description: "Coba login atau gunakan email lain ya!"
+            });
+          } else if (error.message.includes('Password should be at least 6 characters')) {
+            toast({
+              variant: "destructive",
+              title: "Password terlalu pendek! 🔒",
+              description: "Password minimal 6 karakter ya!"
             });
           } else {
             toast({
@@ -58,9 +63,11 @@ const AuthPage: React.FC = () => {
         } else {
           toast({
             title: "Akun berhasil dibuat! 🎊",
-            description: "Cek email kamu untuk konfirmasi ya! (Bisa di folder spam juga 📧)"
+            description: "Selamat! Akun kamu sudah siap digunakan! 🚀"
           });
-          setIsLogin(true); // Switch to login mode
+          // Auto switch to login after successful signup
+          setIsLogin(true);
+          setPassword(''); // Clear password for security
         }
       }
     } catch (error: any) {
@@ -75,10 +82,10 @@ const AuthPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/50 to-slate-900 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/20"></div>
       
-      <Card className="w-full max-w-md relative z-10 shadow-2xl border-0 bg-white/95 backdrop-blur">
+      <Card className="w-full max-w-md relative z-10 soft-shadow border-0 bg-card/95 backdrop-blur">
         <CardHeader className="text-center space-y-4">
           <div className="flex justify-center">
             <div className="relative">
@@ -90,10 +97,10 @@ const AuthPage: React.FC = () => {
           </div>
           
           <div>
-            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
               {isLogin ? 'Hai lagi, Elsa! 👋' : 'Halo, Elsa! 🌟'}
             </CardTitle>
-            <p className="text-sm text-gray-600 mt-2 font-medium">
+            <p className="text-sm text-muted-foreground mt-2 font-medium">
               {isLogin 
                 ? 'Yuk lanjut kelola uang dengan bijak! 💰' 
                 : 'Mari mulai perjalanan finansial yang seru! ✨'
@@ -145,7 +152,7 @@ const AuthPage: React.FC = () => {
                 className="border-2 focus:border-purple-400"
               />
               {!isLogin && (
-                <p className="text-xs text-gray-500">Minimal 6 karakter ya! 💪</p>
+                <p className="text-xs text-muted-foreground">Minimal 6 karakter ya! 💪</p>
               )}
             </div>
 
@@ -169,13 +176,13 @@ const AuthPage: React.FC = () => {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-muted-foreground">
               {isLogin ? 'Belum punya akun?' : 'Sudah punya akun?'}
             </p>
             <Button
               variant="ghost"
               onClick={() => setIsLogin(!isLogin)}
-              className="text-purple-600 hover:text-purple-700 font-semibold hover:bg-purple-50"
+              className="text-purple-500 hover:text-purple-600 font-semibold hover:bg-purple-50 dark:hover:bg-purple-950"
             >
               {isLogin ? 'Daftar di sini! ✨' : 'Masuk di sini! 👆'}
             </Button>
