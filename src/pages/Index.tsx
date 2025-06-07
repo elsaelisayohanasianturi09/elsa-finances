@@ -69,10 +69,10 @@ const DashboardContent = () => {
     const hour = new Date().getHours();
     const name = "Elsa";
     
-    if (hour < 10) return `Selamat pagi, ${name}! ☀️`;
-    if (hour < 15) return `Selamat siang, ${name}! 🌤️`;
-    if (hour < 18) return `Selamat sore, ${name}! 🌅`;
-    return `Selamat malam, ${name}! 🌙`;
+    if (hour < 10) return `Selamat pagi, ${name}`;
+    if (hour < 15) return `Selamat siang, ${name}`;
+    if (hour < 18) return `Selamat sore, ${name}`;
+    return `Selamat malam, ${name}`;
   };
 
   return (
@@ -81,17 +81,17 @@ const DashboardContent = () => {
       
       <main className="container mx-auto px-4 py-6 space-y-6">
         {/* Clock and Welcome Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
           <div className="lg:col-span-1">
             <ClockWidget />
           </div>
-          <div className="lg:col-span-2 flex items-center justify-center">
-            <div className="text-center animate-fade-in">
-              <h2 className="text-3xl font-bold text-gradient mb-2">
+          <div className="lg:col-span-3 flex items-center">
+            <div className="animate-fade-in">
+              <h2 className="text-2xl font-bold text-gradient mb-1">
                 {getGreeting()}
               </h2>
-              <p className="text-muted-foreground font-medium">
-                Mari kita lihat kondisi keuanganmu hari ini! 💪✨
+              <p className="text-muted-foreground">
+                Mari kelola keuangan dengan bijak hari ini
               </p>
             </div>
           </div>
@@ -106,7 +106,7 @@ const DashboardContent = () => {
             color="#22c55e"
             emoji="💰"
             trend={5.2}
-            subtitle="Hasil kerja keras kamu!"
+            subtitle="Pendapatan bulan ini"
           />
           <InteractiveSummaryCard
             title="Total Pengeluaran"
@@ -115,7 +115,7 @@ const DashboardContent = () => {
             color="#ef4444"
             emoji="💸"
             trend={-2.1}
-            subtitle="Hati-hati jangan boros ya!"
+            subtitle="Pengeluaran bulan ini"
           />
           <InteractiveSummaryCard
             title="Total Tabungan"
@@ -124,7 +124,7 @@ const DashboardContent = () => {
             color="#3b82f6"
             emoji="🐷"
             trend={8.7}
-            subtitle="Rajin menabung = masa depan cerah!"
+            subtitle="Tabungan terkumpul"
           />
           <InteractiveSummaryCard
             title="Saldo Tersisa"
@@ -132,47 +132,47 @@ const DashboardContent = () => {
             icon={DollarSign}
             color="#8b5cf6"
             emoji="💳"
-            subtitle="Uang yang bisa kamu pakai"
+            subtitle="Saldo yang tersedia"
           />
           <InteractiveSummaryCard
-            title="Orang Hutang ke Elsa"
+            title="Piutang"
             amount={summary.totalOwed}
             icon={HandCoins}
             color="#f59e0b"
             emoji="😊"
-            subtitle="Piutang yang belum dibayar"
+            subtitle="Yang belum dibayar"
           />
           <InteractiveSummaryCard
-            title="Elsa Hutang ke Orang"
+            title="Hutang"
             amount={summary.totalOwe}
             icon={HandCoins}
             color="#dc2626"
             emoji="😰"
-            subtitle="Jangan lupa bayar ya!"
+            subtitle="Yang harus dibayar"
           />
         </div>
 
         {/* Tabs Navigation */}
         <Tabs defaultValue="dashboard" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 h-auto p-1 modern-card">
-            <TabsTrigger value="dashboard" className="flex items-center gap-2 font-medium rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <TrendingUp className="h-4 w-4" />
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 h-auto p-1 card-modern">
+            <TabsTrigger value="dashboard" className="flex items-center gap-2 text-xs font-medium rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <TrendingUp className="h-3 w-3" />
               <span className="hidden sm:inline">Dashboard</span>
             </TabsTrigger>
-            <TabsTrigger value="transactions" className="flex items-center gap-2 font-medium rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <DollarSign className="h-4 w-4" />
+            <TabsTrigger value="transactions" className="flex items-center gap-2 text-xs font-medium rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <DollarSign className="h-3 w-3" />
               <span className="hidden sm:inline">Transaksi</span>
             </TabsTrigger>
-            <TabsTrigger value="debts" className="flex items-center gap-2 font-medium rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <HandCoins className="h-4 w-4" />
+            <TabsTrigger value="debts" className="flex items-center gap-2 text-xs font-medium rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <HandCoins className="h-3 w-3" />
               <span className="hidden sm:inline">Hutang</span>
             </TabsTrigger>
-            <TabsTrigger value="goals" className="flex items-center gap-2 font-medium rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <Target className="h-4 w-4" />
+            <TabsTrigger value="goals" className="flex items-center gap-2 text-xs font-medium rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <Target className="h-3 w-3" />
               <span className="hidden sm:inline">Target</span>
             </TabsTrigger>
-            <TabsTrigger value="export" className="flex items-center gap-2 font-medium rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <Database className="h-4 w-4" />
+            <TabsTrigger value="export" className="flex items-center gap-2 text-xs font-medium rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <Database className="h-3 w-3" />
               <span className="hidden sm:inline">Export</span>
             </TabsTrigger>
           </TabsList>
@@ -223,17 +223,9 @@ const DashboardContent = () => {
         </Tabs>
 
         {/* Footer */}
-        <footer className="text-center space-y-4">
-          <div className="modern-card p-6">
-            <h3 className="text-xl font-bold text-gradient mb-2">
-              Keep Going, Elsa! 💪
-            </h3>
-            <p className="text-muted-foreground font-medium">
-              Setiap langkah kecil menuju financial freedom itu berharga! ✨
-            </p>
-          </div>
+        <footer className="text-center py-6">
           <p className="text-sm text-muted-foreground">
-            Dibuat dengan ❤️ untuk membantu Elsa mengelola keuangan dengan lebih bijak! 🎯
+            Elsa Finance - Kelola keuangan dengan bijak
           </p>
         </footer>
       </main>
@@ -248,8 +240,8 @@ const Index = () => {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-lg font-semibold text-foreground">Loading Elsa Finance... 💫</p>
+          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-sm font-medium text-foreground">Loading...</p>
         </div>
       </div>
     );

@@ -5,7 +5,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recha
 import { useTransactions } from '@/hooks/useTransactions';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { TrendingUp } from 'lucide-react';
+import { PieChart as PieChartIcon } from 'lucide-react';
 
 const RealtimePieChart: React.FC = () => {
   const { transactions } = useTransactions();
@@ -20,14 +20,11 @@ const RealtimePieChart: React.FC = () => {
     }).format(value);
   };
 
-  const getRandomColor = () => {
-    const colors = [
-      'hsl(142 76% 36%)', 'hsl(0 84% 60%)', 'hsl(46 91% 58%)', 
-      'hsl(221 83% 53%)', 'hsl(262 83% 58%)', 'hsl(16 81% 55%)',
-      'hsl(168 76% 42%)', 'hsl(272 49% 54%)', 'hsl(212 95% 68%)'
-    ];
-    return colors[Math.floor(Math.random() * colors.length)];
-  };
+  const colors = [
+    'hsl(142 76% 36%)', 'hsl(0 84% 60%)', 'hsl(46 91% 58%)', 
+    'hsl(221 83% 53%)', 'hsl(262 83% 58%)', 'hsl(16 81% 55%)',
+    'hsl(168 76% 42%)', 'hsl(272 49% 54%)', 'hsl(212 95% 68%)'
+  ];
 
   useEffect(() => {
     // Calculate expense data by category
@@ -41,7 +38,7 @@ const RealtimePieChart: React.FC = () => {
           acc.push({
             name: transaction.category,
             value: transaction.amount,
-            color: getRandomColor(),
+            color: colors[acc.length % colors.length],
           });
         }
         return acc;
@@ -53,7 +50,6 @@ const RealtimePieChart: React.FC = () => {
   useEffect(() => {
     if (!user) return;
 
-    // Set up real-time subscription
     const channel = supabase
       .channel('transactions-changes')
       .on(
@@ -66,7 +62,6 @@ const RealtimePieChart: React.FC = () => {
         },
         (payload) => {
           console.log('Real-time update:', payload);
-          // The useTransactions hook will automatically refetch data
         }
       )
       .subscribe();
@@ -79,9 +74,9 @@ const RealtimePieChart: React.FC = () => {
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="modern-card p-3 shadow-lg">
-          <p className="font-semibold text-foreground">{payload[0].name}</p>
-          <p className="text-primary font-bold">
+        <div className="card-modern p-3 shadow-lg">
+          <p className="font-medium text-foreground">{payload[0].name}</p>
+          <p className="text-primary font-semibold">
             {formatCurrency(payload[0].value)}
           </p>
         </div>
@@ -92,19 +87,19 @@ const RealtimePieChart: React.FC = () => {
 
   if (realtimeData.length === 0) {
     return (
-      <Card className="modern-card">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-lg font-semibold">
-            <TrendingUp className="h-5 w-5 text-primary" />
-            📊 Pengeluaran Real-time
+      <Card className="card-modern">
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center gap-2 text-base font-semibold">
+            <PieChartIcon className="h-4 w-4 text-primary" />
+            Pengeluaran Real-time
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center h-64 text-muted-foreground">
             <div className="text-center">
-              <div className="text-4xl mb-2">📊</div>
-              <p className="font-semibold">Belum ada data pengeluaran</p>
-              <p className="text-sm">Mulai catat pengeluaranmu dulu ya!</p>
+              <div className="text-3xl mb-2">📊</div>
+              <p className="font-medium">Belum ada data pengeluaran</p>
+              <p className="text-sm">Mulai catat pengeluaranmu</p>
             </div>
           </div>
         </CardContent>
@@ -113,22 +108,22 @@ const RealtimePieChart: React.FC = () => {
   }
 
   return (
-    <Card className="modern-card">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-lg font-semibold">
-          <TrendingUp className="h-5 w-5 text-primary" />
-          📊 Pengeluaran Real-time
+    <Card className="card-modern">
+      <CardHeader className="pb-3">
+        <CardTitle className="flex items-center gap-2 text-base font-semibold">
+          <PieChartIcon className="h-4 w-4 text-primary" />
+          Pengeluaran Real-time
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height={280}>
           <PieChart>
             <Pie
               data={realtimeData}
               cx="50%"
               cy="50%"
-              outerRadius={100}
-              paddingAngle={5}
+              outerRadius={90}
+              paddingAngle={3}
               dataKey="value"
             >
               {realtimeData.map((entry, index) => (
@@ -138,16 +133,16 @@ const RealtimePieChart: React.FC = () => {
             <Tooltip content={<CustomTooltip />} />
             <Legend 
               formatter={(value, entry) => (
-                <span className="text-sm font-medium text-foreground">
-                  {value} - {formatCurrency(entry.payload.value)}
+                <span className="text-xs font-medium text-foreground">
+                  {value}
                 </span>
               )}
             />
           </PieChart>
         </ResponsiveContainer>
-        <div className="mt-4 text-center">
-          <p className="text-sm text-muted-foreground font-medium">
-            🔄 Data diperbarui secara real-time
+        <div className="mt-3 text-center">
+          <p className="text-xs text-muted-foreground">
+            Data diperbarui secara real-time
           </p>
         </div>
       </CardContent>

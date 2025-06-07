@@ -5,7 +5,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { useTransactions } from '@/hooks/useTransactions';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { TrendingUp, Calendar } from 'lucide-react';
+import { TrendingUp } from 'lucide-react';
 
 const MonthlyBarChart: React.FC = () => {
   const { transactions } = useTransactions();
@@ -76,7 +76,6 @@ const MonthlyBarChart: React.FC = () => {
         },
         (payload) => {
           console.log('Real-time chart update:', payload);
-          // The useTransactions hook will automatically refetch data
         }
       )
       .subscribe();
@@ -89,8 +88,8 @@ const MonthlyBarChart: React.FC = () => {
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="modern-card p-3 shadow-lg">
-          <p className="font-semibold text-foreground mb-2">{label}</p>
+        <div className="card-modern p-3 shadow-lg">
+          <p className="font-medium text-foreground mb-2">{label}</p>
           {payload.map((entry: any, index: number) => (
             <p key={index} className="text-sm font-medium" style={{ color: entry.color }}>
               {entry.name}: {formatCurrency(entry.value)}
@@ -103,45 +102,49 @@ const MonthlyBarChart: React.FC = () => {
   };
 
   return (
-    <Card className="modern-card">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-lg font-semibold">
-          <Calendar className="h-5 w-5 text-primary" />
-          📊 Trend Bulan Ini (Real-time)
+    <Card className="card-modern">
+      <CardHeader className="pb-3">
+        <CardTitle className="flex items-center gap-2 text-base font-semibold">
+          <TrendingUp className="h-4 w-4 text-primary" />
+          Trend Bulan Ini
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+        <ResponsiveContainer width="100%" height={280}>
+          <BarChart data={chartData} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
             <XAxis 
               dataKey="name" 
               stroke="hsl(var(--muted-foreground))"
-              fontSize={12}
+              fontSize={11}
+              tickLine={false}
+              axisLine={false}
             />
             <YAxis 
               tickFormatter={(value) => `${value / 1000}k`} 
               stroke="hsl(var(--muted-foreground))"
-              fontSize={12}
+              fontSize={11}
+              tickLine={false}
+              axisLine={false}
             />
             <Tooltip content={<CustomTooltip />} />
             <Bar 
               dataKey="pemasukan" 
               fill="hsl(142 76% 36%)" 
-              radius={[4, 4, 0, 0]}
+              radius={[3, 3, 0, 0]}
               name="Pemasukan"
             />
             <Bar 
               dataKey="pengeluaran" 
               fill="hsl(0 84% 60%)" 
-              radius={[4, 4, 0, 0]}
+              radius={[3, 3, 0, 0]}
               name="Pengeluaran"
             />
           </BarChart>
         </ResponsiveContainer>
-        <div className="mt-4 text-center">
-          <p className="text-sm text-muted-foreground font-medium">
-            🔄 Data diperbarui secara real-time
+        <div className="mt-3 text-center">
+          <p className="text-xs text-muted-foreground">
+            Data diperbarui secara real-time
           </p>
         </div>
       </CardContent>

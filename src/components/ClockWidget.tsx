@@ -32,15 +32,17 @@ const ClockWidget: React.FC = () => {
   };
 
   return (
-    <div className="modern-card p-6 text-center animate-fade-in">
-      <div className="flex items-center justify-center gap-2 mb-2">
-        <Clock className="h-5 w-5 text-primary" />
-        <span className="text-sm font-medium text-muted-foreground">Waktu Sekarang</span>
+    <div className="card-modern p-4 text-center animate-fade-in">
+      <div className="flex items-center justify-center gap-2 mb-3">
+        <Clock className="h-4 w-4 text-primary" />
+        <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+          Waktu Sekarang
+        </span>
       </div>
-      <div className="text-3xl font-mono font-bold text-gradient mb-1">
+      <div className="text-2xl font-bold text-foreground mb-1 font-mono">
         {formatTime(currentTime)}
       </div>
-      <div className="text-sm text-muted-foreground">
+      <div className="text-xs text-muted-foreground">
         {formatDate(currentTime)}
       </div>
     </div>
