@@ -23,6 +23,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
+        console.log('Auth state changed:', event, session?.user?.email);
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
@@ -31,6 +32,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('Initial session:', session?.user?.email);
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
@@ -41,33 +43,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signUp = async (email: string, password: string, fullName: string) => {
     try {
-      const redirectUrl = `${window.location.origin}/`;
+      console.log('Attempting signup via edge function...');
       
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: redirectUrl,
-          data: {
-            full_name: fullName
-          }
+      const { data, error } = await supabase.functions.invoke('handle-signup', {
+        body: {
+          email,
+          password,
+          fullName
         }
       });
       
-      console.log('SignUp response:', { data, error });
+      console.log('Signup response:', { data, error });
       
-      // If user is created successfully, ignore webhook errors
-      if (data?.user && error?.message?.includes('Error sending confirmation mail')) {
-        console.log('User created successfully, email confirmation failed but that\'s okay');
-        return { error: null };
-      }
-      
-      // If there's any other error, return it
       if (error) {
-        console.error('SignUp error:', error);
+        console.error('SignUp function error:', error);
         return { error };
       }
       
+      if (data?.error) {
+        console.error('SignUp data error:', data.error);
+        return { error: { message: data.error } };
+      }
+      
+      console.log('User created successfully via edge function');
       return { error: null };
     } catch (err: any) {
       console.error('SignUp catch error:', err);
@@ -76,14 +74,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signIn = async (email: string, password: string) => {
+    console.log('Attempting sign in for:', email);
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password
     });
+    if (error) {
+      console.error('Sign in error:', error);
+    } else {
+      console.log('Sign in successful');
+    }
     return { error };
   };
 
   const signOut = async () => {
+    console.log('Signing out...');
     await supabase.auth.signOut();
   };
 
