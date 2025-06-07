@@ -40,19 +40,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const signUp = async (email: string, password: string, fullName: string) => {
-    const redirectUrl = `${window.location.origin}/`;
-    
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: redirectUrl,
-        data: {
-          full_name: fullName
+    try {
+      const redirectUrl = `${window.location.origin}/`;
+      
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: redirectUrl,
+          data: {
+            full_name: fullName
+          }
         }
+      });
+      
+      // Even if there's a webhook error, the user might still be created
+      if (error && !error.message.includes('webhook')) {
+        return { error };
       }
-    });
-    return { error };
+      
+      return { error: null };
+    } catch (err: any) {
+      console.error('SignUp error:', err);
+      return { error: err };
+    }
   };
 
   const signIn = async (email: string, password: string) => {

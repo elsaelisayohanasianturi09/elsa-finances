@@ -41,19 +41,29 @@ const AuthPage: React.FC = () => {
       } else {
         const { error } = await signUp(email, password, fullName);
         if (error) {
-          toast({
-            variant: "destructive",
-            title: "Oops! Ada masalah nih 😓",
-            description: error.message
-          });
+          // Handle specific signup errors
+          if (error.message.includes('User already registered')) {
+            toast({
+              variant: "destructive",
+              title: "Email sudah terdaftar! 📧",
+              description: "Coba login atau gunakan email lain ya!"
+            });
+          } else {
+            toast({
+              variant: "destructive",
+              title: "Oops! Ada masalah nih 😓",
+              description: error.message
+            });
+          }
         } else {
           toast({
             title: "Akun berhasil dibuat! 🎊",
-            description: "Cek email kamu untuk konfirmasi ya!"
+            description: "Cek email kamu untuk konfirmasi ya! (Bisa di folder spam juga 📧)"
           });
+          setIsLogin(true); // Switch to login mode
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       toast({
         variant: "destructive",
         title: "Ada error nih! 🤔",
@@ -131,8 +141,12 @@ const AuthPage: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                minLength={6}
                 className="border-2 focus:border-purple-400"
               />
+              {!isLogin && (
+                <p className="text-xs text-gray-500">Minimal 6 karakter ya! 💪</p>
+              )}
             </div>
 
             <Button 
