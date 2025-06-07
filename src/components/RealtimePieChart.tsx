@@ -22,8 +22,9 @@ const RealtimePieChart: React.FC = () => {
 
   const getRandomColor = () => {
     const colors = [
-      '#8B5CF6', '#EC4899', '#F59E0B', '#10B981', '#3B82F6',
-      '#EF4444', '#6366F1', '#84CC16', '#F97316', '#06B6D4'
+      'hsl(142 76% 36%)', 'hsl(0 84% 60%)', 'hsl(46 91% 58%)', 
+      'hsl(221 83% 53%)', 'hsl(262 83% 58%)', 'hsl(16 81% 55%)',
+      'hsl(168 76% 42%)', 'hsl(272 49% 54%)', 'hsl(212 95% 68%)'
     ];
     return colors[Math.floor(Math.random() * colors.length)];
   };
@@ -78,9 +79,9 @@ const RealtimePieChart: React.FC = () => {
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="white-card p-3 rounded-lg shadow-lg">
-          <p className="font-semibold text-gray-800">{payload[0].name}</p>
-          <p className="text-purple-600 font-bold">
+        <div className="modern-card p-3 shadow-lg">
+          <p className="font-semibold text-foreground">{payload[0].name}</p>
+          <p className="text-primary font-bold">
             {formatCurrency(payload[0].value)}
           </p>
         </div>
@@ -91,15 +92,15 @@ const RealtimePieChart: React.FC = () => {
 
   if (realtimeData.length === 0) {
     return (
-      <Card className="interactive-card">
+      <Card className="modern-card">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-lg font-bold">
-            <TrendingUp className="h-5 w-5 text-purple-600" />
+          <CardTitle className="flex items-center gap-2 text-lg font-semibold">
+            <TrendingUp className="h-5 w-5 text-primary" />
             📊 Pengeluaran Real-time
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center justify-center h-64 text-gray-500">
+          <div className="flex items-center justify-center h-64 text-muted-foreground">
             <div className="text-center">
               <div className="text-4xl mb-2">📊</div>
               <p className="font-semibold">Belum ada data pengeluaran</p>
@@ -112,10 +113,10 @@ const RealtimePieChart: React.FC = () => {
   }
 
   return (
-    <Card className="interactive-card">
+    <Card className="modern-card">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-lg font-bold">
-          <TrendingUp className="h-5 w-5 text-purple-600" />
+        <CardTitle className="flex items-center gap-2 text-lg font-semibold">
+          <TrendingUp className="h-5 w-5 text-primary" />
           📊 Pengeluaran Real-time
         </CardTitle>
       </CardHeader>
@@ -137,7 +138,7 @@ const RealtimePieChart: React.FC = () => {
             <Tooltip content={<CustomTooltip />} />
             <Legend 
               formatter={(value, entry) => (
-                <span className="text-sm font-medium text-gray-700">
+                <span className="text-sm font-medium text-foreground">
                   {value} - {formatCurrency(entry.payload.value)}
                 </span>
               )}
@@ -145,7 +146,7 @@ const RealtimePieChart: React.FC = () => {
           </PieChart>
         </ResponsiveContainer>
         <div className="mt-4 text-center">
-          <p className="text-sm text-gray-600 font-medium">
+          <p className="text-sm text-muted-foreground font-medium">
             🔄 Data diperbarui secara real-time
           </p>
         </div>

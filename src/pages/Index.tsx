@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from '@/contexts/AuthContext';
 import { ThemeProvider } from '@/contexts/ThemeContext';
@@ -10,6 +11,8 @@ import TransactionList from '@/components/TransactionList';
 import DebtTracker from '@/components/DebtTracker';
 import SavingsGoals from '@/components/SavingsGoals';
 import ExportData from '@/components/ExportData';
+import ClockWidget from '@/components/ClockWidget';
+import MonthlyBarChart from '@/components/MonthlyBarChart';
 import { useTransactions } from '@/hooks/useTransactions';
 import { useDebts } from '@/hooks/useDebts';
 import { useSavingsGoals } from '@/hooks/useSavingsGoals';
@@ -62,42 +65,6 @@ const DashboardContent = () => {
     setSummary(newSummary);
   }, [transactions, debts]);
 
-  const expenseData = transactions
-    .filter(t => t.type === 'expense')
-    .reduce((acc, transaction) => {
-      const existing = acc.find(item => item.name === transaction.category);
-      if (existing) {
-        existing.value += transaction.amount;
-      } else {
-        acc.push({
-          name: transaction.category,
-          value: transaction.amount,
-          color: `hsl(${Math.random() * 360}, 70%, 50%)`,
-        });
-      }
-      return acc;
-    }, [] as Array<{ name: string; value: number; color: string }>);
-
-  const monthlyData = transactions
-    .reduce((acc, transaction) => {
-      const month = new Date(transaction.date).toLocaleDateString('id-ID', { month: 'short' });
-      const existing = acc.find(item => item.name === month);
-      
-      if (existing) {
-        if (transaction.type === 'income') existing.income += transaction.amount;
-        if (transaction.type === 'expense') existing.expense += transaction.amount;
-      } else {
-        acc.push({
-          name: month,
-          income: transaction.type === 'income' ? transaction.amount : 0,
-          expense: transaction.type === 'expense' ? transaction.amount : 0,
-          value: transaction.amount,
-          color: transaction.type === 'income' ? '#10b981' : '#ef4444',
-        });
-      }
-      return acc;
-    }, [] as Array<{ name: string; income: number; expense: number; value: number; color: string }>);
-
   const getGreeting = () => {
     const hour = new Date().getHours();
     const name = "Elsa";
@@ -109,27 +76,34 @@ const DashboardContent = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background emoji-bg">
+    <div className="min-h-screen bg-background">
       <Header />
       
-      <main className="container mx-auto px-4 py-8">
-        {/* Welcome Section */}
-        <div className="mb-8 text-center animate-fade-in">
-          <h2 className="text-4xl font-black mb-3 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-            {getGreeting()}
-          </h2>
-          <p className="text-lg text-muted-foreground font-semibold">
-            Mari kita lihat kondisi keuanganmu hari ini! 💪✨
-          </p>
+      <main className="container mx-auto px-4 py-6 space-y-6">
+        {/* Clock and Welcome Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-1">
+            <ClockWidget />
+          </div>
+          <div className="lg:col-span-2 flex items-center justify-center">
+            <div className="text-center animate-fade-in">
+              <h2 className="text-3xl font-bold text-gradient mb-2">
+                {getGreeting()}
+              </h2>
+              <p className="text-muted-foreground font-medium">
+                Mari kita lihat kondisi keuanganmu hari ini! 💪✨
+              </p>
+            </div>
+          </div>
         </div>
 
-        {/* Enhanced Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        {/* Summary Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <InteractiveSummaryCard
             title="Total Pemasukan"
             amount={summary.totalIncome}
             icon={TrendingUp}
-            color="#10b981"
+            color="#22c55e"
             emoji="💰"
             trend={5.2}
             subtitle="Hasil kerja keras kamu!"
@@ -178,42 +152,36 @@ const DashboardContent = () => {
           />
         </div>
 
-        {/* Enhanced Tabs Navigation */}
+        {/* Tabs Navigation */}
         <Tabs defaultValue="dashboard" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 h-auto p-2 white-card rounded-xl">
-            <TabsTrigger value="dashboard" className="flex items-center gap-2 font-bold data-[state=active]:bg-purple-100 data-[state=active]:text-purple-600">
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 h-auto p-1 modern-card">
+            <TabsTrigger value="dashboard" className="flex items-center gap-2 font-medium rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <TrendingUp className="h-4 w-4" />
               <span className="hidden sm:inline">Dashboard</span>
             </TabsTrigger>
-            <TabsTrigger value="transactions" className="flex items-center gap-2 font-bold data-[state=active]:bg-purple-100 data-[state=active]:text-purple-600">
+            <TabsTrigger value="transactions" className="flex items-center gap-2 font-medium rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <DollarSign className="h-4 w-4" />
               <span className="hidden sm:inline">Transaksi</span>
             </TabsTrigger>
-            <TabsTrigger value="debts" className="flex items-center gap-2 font-bold data-[state=active]:bg-purple-100 data-[state=active]:text-purple-600">
+            <TabsTrigger value="debts" className="flex items-center gap-2 font-medium rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <HandCoins className="h-4 w-4" />
               <span className="hidden sm:inline">Hutang</span>
             </TabsTrigger>
-            <TabsTrigger value="goals" className="flex items-center gap-2 font-bold data-[state=active]:bg-purple-100 data-[state=active]:text-purple-600">
+            <TabsTrigger value="goals" className="flex items-center gap-2 font-medium rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <Target className="h-4 w-4" />
               <span className="hidden sm:inline">Target</span>
             </TabsTrigger>
-            <TabsTrigger value="export" className="flex items-center gap-2 font-bold data-[state=active]:bg-purple-100 data-[state=active]:text-purple-600">
+            <TabsTrigger value="export" className="flex items-center gap-2 font-medium rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <Database className="h-4 w-4" />
               <span className="hidden sm:inline">Export</span>
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="dashboard" className="space-y-6">
-            {/* Real-time Charts */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            {/* Charts */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <MonthlyBarChart />
               <RealtimePieChart />
-              {monthlyData.length > 0 && (
-                <FinanceChart
-                  data={monthlyData}
-                  type="bar"
-                  title="Trend Bulanan 📈"
-                />
-              )}
             </div>
 
             {/* Quick Transaction Form and List */}
@@ -254,17 +222,17 @@ const DashboardContent = () => {
           </TabsContent>
         </Tabs>
 
-        {/* Enhanced Footer */}
-        <footer className="mt-16 text-center">
-          <div className="white-card rounded-2xl p-8 mb-8 emoji-bg">
-            <h3 className="text-2xl font-black text-purple-800 mb-2">
+        {/* Footer */}
+        <footer className="text-center space-y-4">
+          <div className="modern-card p-6">
+            <h3 className="text-xl font-bold text-gradient mb-2">
               Keep Going, Elsa! 💪
             </h3>
-            <p className="text-purple-600 font-semibold">
+            <p className="text-muted-foreground font-medium">
               Setiap langkah kecil menuju financial freedom itu berharga! ✨
             </p>
           </div>
-          <p className="text-sm text-muted-foreground font-medium">
+          <p className="text-sm text-muted-foreground">
             Dibuat dengan ❤️ untuk membantu Elsa mengelola keuangan dengan lebih bijak! 🎯
           </p>
         </footer>
@@ -278,10 +246,10 @@ const Index = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 flex items-center justify-center">
-        <div className="text-center text-white">
-          <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-xl font-bold">Loading Elsa Finance... 💫</p>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-lg font-semibold text-foreground">Loading Elsa Finance... 💫</p>
         </div>
       </div>
     );
