@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -14,20 +13,12 @@ const ExportData: React.FC = () => {
   const { goals } = useSavingsGoals();
   const { toast } = useToast();
 
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-      minimumFractionDigits: 0,
-    }).format(value);
-  };
-
   const exportToCSV = (data: any[], filename: string, headers: string[]) => {
     if (data.length === 0) {
       toast({
         variant: "destructive",
-        title: "Oops! Data kosong 😅",
-        description: "Belum ada data untuk diekspor nih!"
+        title: "Data kosong",
+        description: "Belum ada data untuk diekspor"
       });
       return;
     }
@@ -51,8 +42,8 @@ const ExportData: React.FC = () => {
     document.body.removeChild(link);
 
     toast({
-      title: "Yeay! Data berhasil diekspor! 🎉",
-      description: `File ${filename}.csv udah siap didownload!`
+      title: "Data berhasil diekspor!",
+      description: `File ${filename}.csv siap didownload`
     });
   };
 
@@ -136,14 +127,14 @@ const ExportData: React.FC = () => {
   };
 
   return (
-    <Card className="animate-fade-in border-2 hover:border-purple-300 transition-all duration-300">
+    <Card className="glass-card animate-fade-in">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-xl font-black text-purple-600">
-          <Database className="h-6 w-6" />
-          Export Data Keuangan 📊
+        <CardTitle className="flex items-center gap-2 text-lg font-semibold text-foreground">
+          <Database className="h-5 w-5 text-primary" />
+          Export Data Keuangan
         </CardTitle>
-        <p className="text-sm text-gray-600 font-medium">
-          Download data keuangan kamu dalam format CSV! 💾
+        <p className="text-sm text-muted-foreground">
+          Download data keuangan dalam format CSV
         </p>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -151,57 +142,57 @@ const ExportData: React.FC = () => {
           <Button
             onClick={exportTransactions}
             variant="outline"
-            className="h-16 flex-col gap-2 border-2 hover:border-green-400 hover:bg-green-50"
+            className="h-16 flex-col gap-2 glass-card hover:bg-primary/10 border-primary/20"
           >
-            <FileText className="h-6 w-6 text-green-600" />
+            <FileText className="h-5 w-5 text-primary" />
             <div className="text-center">
-              <p className="font-bold text-green-600">Transaksi</p>
-              <p className="text-xs text-gray-500">{transactions.length} data</p>
+              <p className="font-medium text-foreground">Transaksi</p>
+              <p className="text-xs text-muted-foreground">{transactions.length} data</p>
             </div>
           </Button>
 
           <Button
             onClick={exportDebts}
             variant="outline"
-            className="h-16 flex-col gap-2 border-2 hover:border-orange-400 hover:bg-orange-50"
+            className="h-16 flex-col gap-2 glass-card hover:bg-orange-500/10 border-orange-500/20"
           >
-            <FileText className="h-6 w-6 text-orange-600" />
+            <FileText className="h-5 w-5 text-orange-600" />
             <div className="text-center">
-              <p className="font-bold text-orange-600">Hutang Piutang</p>
-              <p className="text-xs text-gray-500">{debts.length} data</p>
+              <p className="font-medium text-foreground">Hutang Piutang</p>
+              <p className="text-xs text-muted-foreground">{debts.length} data</p>
             </div>
           </Button>
 
           <Button
             onClick={exportGoals}
             variant="outline"
-            className="h-16 flex-col gap-2 border-2 hover:border-blue-400 hover:bg-blue-50"
+            className="h-16 flex-col gap-2 glass-card hover:bg-blue-500/10 border-blue-500/20"
           >
-            <FileText className="h-6 w-6 text-blue-600" />
+            <FileText className="h-5 w-5 text-blue-600" />
             <div className="text-center">
-              <p className="font-bold text-blue-600">Target Tabungan</p>
-              <p className="text-xs text-gray-500">{goals.length} data</p>
+              <p className="font-medium text-foreground">Target Tabungan</p>
+              <p className="text-xs text-muted-foreground">{goals.length} data</p>
             </div>
           </Button>
 
           <Button
             onClick={exportAllData}
-            className="h-16 flex-col gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold"
+            className="h-16 flex-col gap-2 btn-primary"
           >
-            <Download className="h-6 w-6" />
+            <Download className="h-5 w-5" />
             <div className="text-center">
-              <p>Semua Data</p>
+              <p className="font-medium">Semua Data</p>
               <p className="text-xs opacity-90">Laporan lengkap</p>
             </div>
           </Button>
         </div>
 
-        <div className="mt-6 p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg border-2 border-purple-200">
-          <h4 className="font-bold text-purple-800 mb-2">💡 Tips Export:</h4>
-          <ul className="text-sm text-purple-700 space-y-1">
+        <div className="mt-6 p-4 glass-card">
+          <h4 className="font-medium text-foreground mb-2">💡 Tips Export:</h4>
+          <ul className="text-sm text-muted-foreground space-y-1">
             <li>• File CSV bisa dibuka di Excel atau Google Sheets</li>
-            <li>• Data yang diekspor sesuai dengan data real-time dari database</li>
-            <li>• Gunakan "Semua Data" untuk laporan lengkap bulanan/tahunan</li>
+            <li>• Data yang diekspor sesuai dengan data real-time</li>
+            <li>• Gunakan "Semua Data" untuk laporan lengkap</li>
           </ul>
         </div>
       </CardContent>

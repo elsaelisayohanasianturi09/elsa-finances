@@ -48,6 +48,81 @@ export type Database = {
         }
         Relationships: []
       }
+      financial_insights: {
+        Row: {
+          created_at: string | null
+          id: string
+          insight_data: Json
+          insight_type: string
+          period_end: string
+          period_start: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          insight_data: Json
+          insight_type: string
+          period_end: string
+          period_start: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          insight_data?: Json
+          insight_type?: string
+          period_end?: string
+          period_start?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      financial_targets: {
+        Row: {
+          category: string
+          created_at: string | null
+          current_amount: number | null
+          description: string | null
+          emoji: string | null
+          id: string
+          is_completed: boolean | null
+          target_amount: number
+          target_date: string | null
+          title: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string | null
+          current_amount?: number | null
+          description?: string | null
+          emoji?: string | null
+          id?: string
+          is_completed?: boolean | null
+          target_amount: number
+          target_date?: string | null
+          title: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          current_amount?: number | null
+          description?: string | null
+          emoji?: string | null
+          id?: string
+          is_completed?: boolean | null
+          target_amount?: number
+          target_date?: string | null
+          title?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -149,6 +224,45 @@ export type Database = {
           note?: string | null
           type?: string
           updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_preferences: {
+        Row: {
+          created_at: string | null
+          currency: string | null
+          id: string
+          low_balance_threshold: number | null
+          notification_debt_reminder: boolean | null
+          notification_email: boolean | null
+          notification_goal_reminder: boolean | null
+          theme: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          currency?: string | null
+          id?: string
+          low_balance_threshold?: number | null
+          notification_debt_reminder?: boolean | null
+          notification_email?: boolean | null
+          notification_goal_reminder?: boolean | null
+          theme?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          currency?: string | null
+          id?: string
+          low_balance_threshold?: number | null
+          notification_debt_reminder?: boolean | null
+          notification_email?: boolean | null
+          notification_goal_reminder?: boolean | null
+          theme?: string | null
+          updated_at?: string | null
           user_id?: string
         }
         Relationships: []
